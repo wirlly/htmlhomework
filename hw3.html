@@ -1,0 +1,172 @@
+<html>   
+	<head>      
+	        <meta http-equiv="Content-Type" content="text/html; charset=big5">
+		<title>hw3 my favorite picture </title>
+<style type="text/css">	 
+		body {
+			background-attachment: fixed;
+  			background-image: url('1294820859899.jpg');
+  			background-repeat: no-repeat;
+			background-position: center; 
+			color:black;
+			cursor: crosshair; 
+		} 
+</style>
+<script language="javascript">
+function changeImg(a)
+{
+	nowImgId=(nowImgId+a+imgNum)%(imgNum);
+	var s=new Image();
+	s.onload=function( )
+	{
+		while((s.width>screen.availWidth) || (s.height>screen.availHeight)) //感覺||是不是沒發揮功用
+		{	
+			s.width=(s.width/3)*2;
+			s.height=(s.height/3)*2;			
+		}
+		var m=document.getElementById("mainImg");
+		m.height=s.height;
+		m.width=s.width;
+		m.src=s.src;
+		//document.getElementById("info").innerHTML=s.height+","+s.width;
+	}
+	s.src="./img/"+nowImgId+".jpg";	
+}
+
+function selectImg(a)  //圖片頁數選擇
+{
+	nowImgId=a;
+	var s=new Image();
+	s.onload=function( )
+	{
+		while(s.width>screen.availWidth || s.height>screen.availHeight)
+		{	
+			s.width=(s.width/3)*2;
+			s.height=(s.height/3)*2;			
+		}
+		var m=document.getElementById("mainImg");
+		m.height=s.height;
+		m.width=s.width;
+		m.src=s.src;
+		//document.getElementById("info").innerHTML=s.height+","+s.width;
+	}
+	
+	s.src="./img/"+nowImgId+".jpg";	
+}
+
+function largeImg()   //放大圖片
+{
+	var s=new Image();
+	s.onload=function( )
+	{
+		if(s.width<screen.availWidth || s.height<screen.availHeight)
+		{	
+			s.width=(s.width/3)*4;
+			s.height=(s.height/3)*4;			
+		}
+		var m=document.getElementById("mainImg");
+		m.height=s.height;
+		m.width=s.width;
+		m.src=s.src;
+		//document.getElementById("info").innerHTML=s.height+","+s.width;
+	}
+	
+	s.src="./img/"+nowImgId+".jpg";	
+}
+
+function smallImg()   //縮小圖片
+{
+	var s=new Image();
+	s.onload=function( )
+	{	
+		s.width=(s.width/3);
+		s.height=(s.height/3);			
+		var m=document.getElementById("mainImg");
+		m.height=s.height;
+		m.width=s.width;
+		m.src=s.src;
+		//document.getElementById("info").innerHTML=s.height+","+s.width;
+	}
+	
+	s.src="./img/"+nowImgId+".jpg";	
+}
+
+var t;
+function play()  //自動撥放
+{
+	t=setInterval("changeImg(1)",2000);
+}
+
+var favor = new Array("-1","-1","-1","-1","-1","-1","-1","-1")
+
+function fav()   //我的最愛
+{
+
+	if(favor[nowImgId]==-1)
+	{
+		alert("新增成功")
+		favor[nowImgId]=nowImgId
+	}
+	else if(favor[nowImgId]>-1)
+	{
+		alert("移除成功")
+		favor[nowImgId]=-1
+	}
+}
+
+function showf()  //印出頁數
+{
+	myWindow=window.open('','','')
+	myWindow.document.write("你所喜歡的圖片頁數是:第 ")
+	for(var i=0; i<8; i++)
+	{
+		if(favor[i]>-1)
+		{
+			myWindow.document.write(favor[i]+1+"  ")
+			 
+		}	
+	}
+	myWindow.document.write("頁 ")
+	myWindow.focus()
+}
+</script>		
+</head> 
+  
+<body>
+<center>
+	<input type="button" value="Back" onclick="changeImg(-1)"/>
+   	<select name="page"  onchange="selectImg(this.value);">      		
+		<option value="0" selected="selected">1</option>      		
+		<option value="1">2</option>      		
+		<option value="2">3</option>
+		<option value="3">4</option>      		
+		<option value="4">5</option>  
+		<option value="5">6</option>      		
+		<option value="6">7</option>
+		<option value="7">8</option>      	
+	</select>	
+	<input type="button" value="Next" onclick="changeImg(1)"/>
+</cenyer>
+<div id="main" style="text-align:center; ">
+<p id="info"></p>
+<img id="mainImg" ></img>
+</div>
+
+<center>
+	<input type="button" value="復原" onclick="changeImg(0)"/>
+	<input type="button" value="+" onclick="largeImg()"/>
+	<input type="button" value="-" onclick="smallImg()"/>
+	<input type="button" value="自動播放" onclick="play()"/>
+	<input type="button" value="暫停" onclick="t=window.clearInterval(t)"/>	
+	<input type="button" value="新增/移除我的最愛最愛" onclick="fav()"/>	
+	<input type="button" value="顯示我的最愛最愛頁數" onclick="showf()"/>			
+</center>
+
+<script language="javascript">
+var nowImgId=0;
+var imgNum=8;
+changeImg(nowImgId);
+</script>
+</body>
+
+</html>
